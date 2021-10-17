@@ -1,32 +1,26 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useState } from "react";
 import { FixedSizeList as List } from "react-window";
+import { Row, LIST } from "./Row";
 import "./App.css";
 
-const list = Array.from(Array(3000).keys()).map(
-  (value) => "Some text " + value
-);
-
-const Row = ({ index, style }) => {
-  return <div style={style}> {list[index + 1]}</div>;
-};
-
 function App() {
-  const headerRef = useRef(null);
-  const handleScroll = useCallback(({ scrollOffset }) => {
-    const x = 100 - scrollOffset;
-    if (x > 30) {
-      headerRef.current.style.height = x + "px";
-    }
-  }, []);
+  const [headerHeight, setHeaderHeight] = useState(100);
+
+  const handleScroll = useCallback(
+    ({ scrollOffset: offset }) => setHeaderHeight(Math.max(100 - offset, 30)),
+    []
+  );
+
   return (
     <div className="App">
       <div className="container">
-        <div ref={headerRef} className="header">
-          Subheader or sth
+        <div style={{ height: headerHeight }} className="header">
+          <span>Header</span>
+          {headerHeight > 31 && <b>sth important</b>}
         </div>
         <List
           height={500}
-          itemCount={list.length}
+          itemCount={LIST.length}
           itemSize={35}
           onScroll={handleScroll}
           width={300}
