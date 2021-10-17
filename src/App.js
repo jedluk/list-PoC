@@ -16,7 +16,7 @@ function App() {
       <div className="container">
         <div style={{ height: headerHeight }} className="header">
           <span>Header</span>
-          {headerHeight > 31 && <b>sth important</b>}
+          {headerHeight > 35 && <b>sth important</b>}
         </div>
         <List
           height={500}
